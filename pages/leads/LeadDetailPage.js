@@ -7,9 +7,9 @@ class LeadDetailPage {
     this.leadNumber = page.locator(SELECTORS.leadNumber);
     this.leadGeneratedDate = page.locator(SELECTORS.leadGeneratedDate);
     this.leadSavingGroupValue = page.locator(SELECTORS.leadSavingGroupValue);
-    this.tasksGroupHead = page.locator('div.dl-tasks-group-head');
-    this.tasksStagePill = page.locator('div.dl-tasks-group-head span.indicator-pill.cyan');
-    this.tasksCountLabel = page.locator('div.dl-tasks-group-head span.text-muted.small');
+    this.tasksGroupHead = page.locator(SELECTORS.leadTasksGroupHead);
+    this.tasksStagePill = page.locator(SELECTORS.leadTasksStagePill);
+    this.tasksCountLabel = page.locator(SELECTORS.leadTasksCountLabel);
     this.leadTaskStatusPills = page.locator(SELECTORS.leadTaskStatusPill);
   }
 

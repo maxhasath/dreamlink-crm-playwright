@@ -12,6 +12,7 @@ class ClassificationPage {
     this.summaryCloseBtn = page.locator(SELECTORS.classificationSummaryCloseBtn);
     this.modalBackdrop = page.locator(SELECTORS.classificationModalBackdrop);
     this.fullyEligibleBadge = page.locator(SELECTORS.fullyEligibleBadge);
+    this.dataCorrectionalBadge = page.locator(SELECTORS.dataCorrectionalBadge);
   }
 
   async selectFirstGroupCheckbox() {
@@ -59,6 +60,10 @@ class ClassificationPage {
 
   async expectFullyEligibleBadgeVisible() {
     await expect(this.fullyEligibleBadge).toBeVisible({ timeout: TIMEOUTS.default });
+  }
+
+  async expectDataCorrectionBadgeVisible() {
+    await expect(this.dataCorrectionalBadge).toBeVisible({ timeout: TIMEOUTS.default });
   }
 }
 

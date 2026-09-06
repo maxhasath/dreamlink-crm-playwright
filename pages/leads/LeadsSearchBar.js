@@ -1,10 +1,11 @@
 const { expect } = require('@playwright/test');
 const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { BasePage } = require('../BasePage');
 const leadsData = require('../../data/leads.json');
 
-class LeadsSearchBar {
+class LeadsSearchBar extends BasePage {
   constructor(page) {
-    this.page = page;
+    super(page);
     this.leadNumberInput = page.locator(SELECTORS.leadNumberSearchInput);
     this.savingGroupInput = page.locator(SELECTORS.leadSavingGroupSearchInput);
     this.loadingIndicator = page.locator(SELECTORS.deskLoadingIndicator);
@@ -19,8 +20,7 @@ class LeadsSearchBar {
   }
 
   async searchBySavingGroup(groupName) {
-    await this.savingGroupInput.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
-    await this.savingGroupInput.fill(groupName);
+    await this.searchByAutocomplete(this.savingGroupInput, groupName);
     await this.loadingIndicator.waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
   }
 

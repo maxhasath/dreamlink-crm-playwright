@@ -110,12 +110,39 @@ leadNumber: '[data-fieldname="lead_number"] .control-value.like-disabled-input',
 leadGeneratedDate: '[data-fieldname="generated_date"] .control-value.like-disabled-input',
 leadSavingGroupValue: '[data-fieldname="dl_saving_group"] .control-value.like-disabled-input',
 leadTaskStatusPill: 'span.indicator-pill.purple',
+// Lead detail — tasks section
+leadTasksGroupHead: 'div.dl-tasks-group-head',
+leadTasksStagePill: 'div.dl-tasks-group-head span.indicator-pill.cyan',
+leadTasksCountLabel: 'div.dl-tasks-group-head span.text-muted.small',
 
 // Leads list — active status pill
 leadActiveStatusPill: 'span.filterable.indicator-pill.green.ellipsis',
 // Leads list — number search
 leadNumberSearchInput: 'input[data-fieldname="lead_number"]',
 leadsNoResultsMessage: 'div.no-result p',
+
+// Autocomplete dropdown
+autocompleteListbox: 'ul[role="listbox"]:not([hidden])',
+autocompleteDropdownOption: '[role="option"]',
+
+// Groups list — data correction badge
+dataCorrectionalBadge: 'span.badge.badge-secondary[title="Data Correction Required"]',
+
+// Pre Leads list page
+preLeadsPageTitle: 'a.title-text[title="Pre Lead"]',
+preLeadsNavLink: 'a.item-anchor[href="/desk/dl-pre-lead"]',
+preLeadSavingGroupSearchInput: 'input[data-fieldname="dl_saving_group"]',
+preLeadNameLink: 'a.ellipsis[data-doctype="DL Pre Lead"]',
+
+// Pre Lead detail page
+preLeadNumber: '[data-fieldname="pre_lead_number"] .control-value.like-disabled-input',
+preLeadGeneratedDate: '[data-fieldname="generated_date"] .control-value.like-disabled-input',
+preLeadSavingGroupValue: '[data-fieldname="dl_saving_group"] .control-value.like-disabled-input',
+preLeadTasksStagePill: 'div.dl-tasks-group-head span.indicator-pill.blue',
+preLeadTasksCountLabel: 'div.dl-tasks-group-head span.text-muted.small',
+preLeadTaskStatusPill: 'span.indicator-pill.purple',
+preLeadTasksGrid: 'div.dl-tasks-group div.grid-row',
+
 };
 
 const TIMEOUTS = {

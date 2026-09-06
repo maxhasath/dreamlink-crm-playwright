@@ -6,8 +6,12 @@ const { ClassificationPage } = require('../../pages/groups/ClassificationPage');
 const { LeadsPage } = require('../../pages/leads/LeadsPage');
 const { LeadsSearchBar } = require('../../pages/leads/LeadsSearchBar');
 const { LeadDetailPage } = require('../../pages/leads/LeadDetailPage');
+const { PreLeadsPage } = require('../../pages/preLeads/PreLeadsPage');
+const { PreLeadsSearchBar } = require('../../pages/preLeads/PreLeadsSearchBar');
+const { PreLeadDetailPage } = require('../../pages/preLeads/PreLeadDetailPage');
 const { getCredentials } = require('../../util/helpers');
 const groupsData = require('../../data/groups.json');
+const preLeadsData = require('../../data/preLeads.json');
 
 test.describe('DreamLink CRM - Run Classification', () => {
   let loginPage;
@@ -17,6 +21,9 @@ test.describe('DreamLink CRM - Run Classification', () => {
   let leadsPage;
   let leadsSearchBar;
   let leadDetailPage;
+  let preLeadsPage;
+  let preLeadsSearchBar;
+  let preLeadDetailPage;
   const userData = getCredentials();
 
   test.beforeEach(async ({ page }) => {
@@ -27,6 +34,9 @@ test.describe('DreamLink CRM - Run Classification', () => {
     leadsPage = new LeadsPage(page);
     leadsSearchBar = new LeadsSearchBar(page);
     leadDetailPage = new LeadDetailPage(page);
+    preLeadsPage = new PreLeadsPage(page);
+    preLeadsSearchBar = new PreLeadsSearchBar(page);
+    preLeadDetailPage = new PreLeadDetailPage(page);
     await loginPage.open();
     await loginPage.login(userData.username, userData.password);
     await groupsPage.open();
@@ -36,83 +46,90 @@ test.describe('DreamLink CRM - Run Classification', () => {
   test('TC-CL-01 | Running classification on a group with an active workflow shows "No Groups Classified" summary', async ({ page }) => {
     const { keyword, expectedCount } = groupsData.classificationSearch;
 
-    // Search for the target group
     await groupsSearchBar.searchByGroupName(keyword);
     await groupsSearchBar.expectResultCount(expectedCount);
-
-    // Select the group via its checkbox
     await classificationPage.selectFirstGroupCheckbox();
-
-    // Open Actions dropdown and trigger Run Classification
     await classificationPage.openActionsDropdown();
     await classificationPage.clickRunClassificationMenuItem();
-
-    // Confirm in the Run Classification modal
     await classificationPage.confirmRunClassification();
-
-    // Assert Classification Summary modal shows "No Groups Classified"
     await classificationPage.expectSummaryPillText();
-
-    // Close the summary modal
     await classificationPage.closeSummaryModal();
-
-    // Assert modal is fully dismissed
     await classificationPage.expectModalDismissed();
   });
 
-  // PRE-CONDITION: Reset "Karoo Transport Collective 01D0F8E1-0240" to Not Classified on zm-qa before running
+  // PRE-CONDITION: Reset "Karoo Transport Collective 01D0F8E1-0240" to Not Classified before running
   test('TC-CL-02 | Running classification on a fully eligible group creates a lead with 6 assigned tasks',
     { retries: 0 },
     async ({ page }) => {
       const { keyword, expectedCount, groupName } = groupsData.fullyEligibleSearch;
+
+      await groupsSearchBar.searchByGroupName(keyword);
+      await groupsSearchBar.expectResultCount(expectedCount);
+      await classificationPage.selectFirstGroupCheckbox();
+      await classificationPage.openActionsDropdown();
+      await classificationPage.clickRunClassificationMenuItem();
+      await classificationPage.confirmRunClassification();
+      await classificationPage.expectFullyEligibleSummaryPill();
+      await classificationPage.closeSummaryModal();
+      await classificationPage.expectModalDismissed();
+      await classificationPage.expectFullyEligibleBadgeVisible();
+
+      await leadsPage.open();
+      await leadsPage.expectLoaded();
+      await leadsSearchBar.searchBySavingGroup(groupName);
+      await leadsPage.expectLeadRowVisible();
+      await leadsPage.clickActiveLead();
+      await leadDetailPage.expectLoaded();
+      await leadDetailPage.expectLeadNumberNotEmpty();
+      await leadDetailPage.expectLeadSavingGroup(groupName);
+      await leadDetailPage.expectGeneratedDateIsToday();
+      await leadDetailPage.expectSixTasksAllAssigned();
+    }
+  );
+
+  // PRE-CONDITION: Reset "Nile Supplies Group 0179E714-0189" to Not Classified before running
+  test('TC-CL-03 | Running classification on a data correction group creates a pre lead with correct group information task assigned',
+    { retries: 0 },
+    async ({ page }) => {
+      const { keyword, expectedCount, groupName } = preLeadsData.dataCorrectSearch;
 
       // Search and select the group
       await groupsSearchBar.searchByGroupName(keyword);
       await groupsSearchBar.expectResultCount(expectedCount);
       await classificationPage.selectFirstGroupCheckbox();
 
-      // Open Actions dropdown and trigger Run Classification
+      // Run classification — reusing existing methods
       await classificationPage.openActionsDropdown();
       await classificationPage.clickRunClassificationMenuItem();
-
-      // Confirm in the Run Classification modal
       await classificationPage.confirmRunClassification();
 
-      // Assert Classification Summary modal shows green fully eligible pill
+      // Assert green summary pill
       await classificationPage.expectFullyEligibleSummaryPill();
-
-      // Close the summary modal
       await classificationPage.closeSummaryModal();
-
-      // Assert modal is dismissed
       await classificationPage.expectModalDismissed();
 
-      // Assert Fully Eligible badge is visible on the groups list row
-      await classificationPage.expectFullyEligibleBadgeVisible();
+      // Assert Data Correction Required badge on groups list
+      await classificationPage.expectDataCorrectionBadgeVisible();
 
-      // Navigate to Leads page
-      await leadsPage.open();
-      await leadsPage.expectLoaded();
+      // Navigate to Pre Leads and search by saving group name
+      await preLeadsPage.open();
+      await preLeadsPage.expectLoaded();
+      await preLeadsSearchBar.searchBySavingGroup(groupName);
+      await preLeadsSearchBar.expectResultCount(expectedCount);
+      await preLeadsPage.expectPreLeadRowVisible();
 
-      // Search for the lead by saving group name
-      await leadsSearchBar.searchBySavingGroup(groupName);
-      await leadsPage.expectLeadRowVisible();
+      // Open the pre lead
+      await preLeadsPage.clickFirstPreLead();
+      await preLeadDetailPage.expectLoaded();
 
-      // Open the Active lead
-      await leadsPage.clickActiveLead();
-      await leadDetailPage.expectLoaded();
+      // Assert pre lead details
+      await preLeadDetailPage.expectPreLeadNumberNotEmpty();
+      await preLeadDetailPage.expectSavingGroup(groupName);
+      await preLeadDetailPage.expectGeneratedDateIsToday();
 
-      // Assert lead number is not empty
-      await leadDetailPage.expectLeadNumberNotEmpty();
-
-      // Assert saving group name matches
-      await leadDetailPage.expectLeadSavingGroup(groupName);
-
-      // Assert generated date is today
-      await leadDetailPage.expectGeneratedDateIsToday();
-
-      // Assert 6 tasks are present and all have Assigned status
-      await leadDetailPage.expectSixTasksAllAssigned();
+      // Assert tasks section
+      await preLeadDetailPage.expectClientIdentificationStage();
+      await preLeadDetailPage.expectCorrectGroupInformationTaskAssigned();
     }
   );
 });
