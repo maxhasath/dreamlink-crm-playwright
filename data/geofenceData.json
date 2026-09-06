@@ -1,15 +1,23 @@
 {
-    "searchInput": {
-        "search": "region"
-    },
-    "searchInvalidInput": {
-        "search": "invalid"
-    },
-    "addGeofence": {
-        "geofenceName": "Test Geofence",
-        "overlapPriority": "1"
-    },
-    "exportGeofence": {
-        "filename": "geofence_export.csv"
-    }
+  "searchInput": {
+    "search": "region"
+  },
+  "searchInvalidInput": {
+    "search": "invalid"
+  },
+  "addGeofence": {
+    "geofenceName": "Test Geofence",
+    "overlapPriority": "1"
+  },
+  "exportGeofence": {
+    "filename": "geofence_export.csv"
+  },
+  "mapSearch": {
+    "keyword": "zm central",
+    "expectedCount": 1
+  },
+  "detailSearch": {
+    "keyword": "branch central",
+    "expectedCount": 1
+  }
 }
