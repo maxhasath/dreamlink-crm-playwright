@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class CriterionDetailPage {
   constructor(page) {
@@ -9,18 +9,23 @@ class CriterionDetailPage {
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/eligibility-criteria\//, { timeout: TIMEOUTS.navigation });
-    await this.attributeField.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await expect(this.page).toHaveURL(/eligibility-criteria\//, {
+      timeout: TIMEOUTS.navigation,
+    });
+    await this.attributeField.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectAttributeNotEmpty() {
     const attribute = await this.attributeField.innerText();
-    expect(attribute.trim()).not.toBe('');
+    expect(attribute.trim()).not.toBe("");
   }
 
   async expectGroupTypeNotEmpty() {
     const groupType = await this.groupTypeField.innerText();
-    expect(groupType.trim()).not.toBe('');
+    expect(groupType.trim()).not.toBe("");
   }
 }
 

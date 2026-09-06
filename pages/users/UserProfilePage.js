@@ -1,22 +1,29 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class UserProfilePage {
   constructor(page, displayName) {
     this.page = page;
     this.userMenuBtn = page.locator(SELECTORS.userProfileMenuBtn);
-    this.fullName = page.locator(SELECTORS.userProfileFullName).getByText(displayName);
+    this.fullName = page
+      .locator(SELECTORS.userProfileFullName)
+      .getByText(displayName);
     this.pageTitle = page.locator(SELECTORS.userProfilePageTitle);
   }
 
   async navigateViaUserMenu() {
-    await this.userMenuBtn.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await this.userMenuBtn.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
     await this.userMenuBtn.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/dl-user-profile/, { timeout: TIMEOUTS.navigation });
+    await expect(this.page).toHaveURL(/dl-user-profile/, {
+      timeout: TIMEOUTS.navigation,
+    });
   }
 
   async expectFullNameVisible() {

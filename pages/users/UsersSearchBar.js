@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class UsersSearchBar {
   constructor(page) {
@@ -12,13 +12,21 @@ class UsersSearchBar {
   }
 
   async searchByEmail(keyword) {
-    await this.searchInput.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await this.searchInput.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
     await this.searchInput.fill(keyword);
-    await this.loadingIndicator.waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
+    await this.loadingIndicator.waitFor({
+      state: "hidden",
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectResultCount(expectedCount) {
-    await expect(this.recordCount).toContainText(expectedCount, { timeout: TIMEOUTS.default });
+    await expect(this.recordCount).toContainText(expectedCount, {
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectExactRowCount(expectedCount) {
@@ -27,9 +35,11 @@ class UsersSearchBar {
   }
 
   async expectNoResults() {
-    await expect(this.noResultsMessage).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.noResultsMessage).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     await expect(this.noResultsMessage).toHaveText(
-      'No Users found with matching filters. Clear filters to see all Users.'
+      "No Users found with matching filters. Clear filters to see all Users.",
     );
   }
 }

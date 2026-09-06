@@ -1,19 +1,19 @@
-const { test } = require('@playwright/test');
-const { LoginPage } = require('../../pages/user/LoginPage');
-const { GroupsPage } = require('../../pages/groups/GroupsPage');
-const { GroupsSearchBar } = require('../../pages/groups/GroupsSearchBar');
-const { ClassificationPage } = require('../../pages/groups/ClassificationPage');
-const { LeadsPage } = require('../../pages/leads/LeadsPage');
-const { LeadsSearchBar } = require('../../pages/leads/LeadsSearchBar');
-const { LeadDetailPage } = require('../../pages/leads/LeadDetailPage');
-const { PreLeadsPage } = require('../../pages/preLeads/PreLeadsPage');
-const { PreLeadsSearchBar } = require('../../pages/preLeads/PreLeadsSearchBar');
-const { PreLeadDetailPage } = require('../../pages/preLeads/PreLeadDetailPage');
-const { getCredentials } = require('../../util/helpers');
-const groupsData = require('../../data/groups.json');
-const preLeadsData = require('../../data/preLeads.json');
+const { test } = require("@playwright/test");
+const { LoginPage } = require("../../pages/user/LoginPage");
+const { GroupsPage } = require("../../pages/groups/GroupsPage");
+const { GroupsSearchBar } = require("../../pages/groups/GroupsSearchBar");
+const { ClassificationPage } = require("../../pages/groups/ClassificationPage");
+const { LeadsPage } = require("../../pages/leads/LeadsPage");
+const { LeadsSearchBar } = require("../../pages/leads/LeadsSearchBar");
+const { LeadDetailPage } = require("../../pages/leads/LeadDetailPage");
+const { PreLeadsPage } = require("../../pages/preLeads/PreLeadsPage");
+const { PreLeadsSearchBar } = require("../../pages/preLeads/PreLeadsSearchBar");
+const { PreLeadDetailPage } = require("../../pages/preLeads/PreLeadDetailPage");
+const { getCredentials } = require("../../util/helpers");
+const groupsData = require("../../data/groups.json");
+const preLeadsData = require("../../data/preLeads.json");
 
-test.describe('DreamLink CRM - Run Classification', () => {
+test.describe("DreamLink CRM - Run Classification", () => {
   let loginPage;
   let groupsPage;
   let groupsSearchBar;
@@ -43,7 +43,9 @@ test.describe('DreamLink CRM - Run Classification', () => {
     await groupsPage.expectLoaded();
   });
 
-  test('TC-CL-01 | Running classification on a group with an active workflow shows "No Groups Classified" summary', async ({ page }) => {
+  test('TC-CL-01 | Running classification on a group with an active workflow shows "No Groups Classified" summary', async ({
+    page,
+  }) => {
     const { keyword, expectedCount } = groupsData.classificationSearch;
 
     await groupsSearchBar.searchByGroupName(keyword);
@@ -58,10 +60,12 @@ test.describe('DreamLink CRM - Run Classification', () => {
   });
 
   // PRE-CONDITION: Reset "Karoo Transport Collective 01D0F8E1-0240" to Not Classified before running
-  test('TC-CL-02 | Running classification on a fully eligible group creates a lead with 6 assigned tasks',
+  test(
+    "TC-CL-02 | Running classification on a fully eligible group creates a lead with 6 assigned tasks",
     { retries: 0 },
     async ({ page }) => {
-      const { keyword, expectedCount, groupName } = groupsData.fullyEligibleSearch;
+      const { keyword, expectedCount, groupName } =
+        groupsData.fullyEligibleSearch;
 
       await groupsSearchBar.searchByGroupName(keyword);
       await groupsSearchBar.expectResultCount(expectedCount);
@@ -84,14 +88,16 @@ test.describe('DreamLink CRM - Run Classification', () => {
       await leadDetailPage.expectLeadSavingGroup(groupName);
       await leadDetailPage.expectGeneratedDateIsToday();
       await leadDetailPage.expectSixTasksAllAssigned();
-    }
+    },
   );
 
   // PRE-CONDITION: Reset "Nile Supplies Group 0179E714-0189" to Not Classified before running
-  test('TC-CL-03 | Running classification on a data correction group creates a pre lead with correct group information task assigned',
+  test(
+    "TC-CL-03 | Running classification on a data correction group creates a pre lead with correct group information task assigned",
     { retries: 0 },
     async ({ page }) => {
-      const { keyword, expectedCount, groupName } = preLeadsData.dataCorrectSearch;
+      const { keyword, expectedCount, groupName } =
+        preLeadsData.dataCorrectSearch;
 
       // Search and select the group
       await groupsSearchBar.searchByGroupName(keyword);
@@ -130,6 +136,6 @@ test.describe('DreamLink CRM - Run Classification', () => {
       // Assert tasks section
       await preLeadDetailPage.expectClientIdentificationStage();
       await preLeadDetailPage.expectCorrectGroupInformationTaskAssigned();
-    }
+    },
   );
 });

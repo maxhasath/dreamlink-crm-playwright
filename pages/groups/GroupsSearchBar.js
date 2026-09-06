@@ -1,6 +1,6 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
-const groupsData = require('../../data/groups.json');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
+const groupsData = require("../../data/groups.json");
 
 class GroupsSearchBar {
   constructor(page) {
@@ -12,17 +12,27 @@ class GroupsSearchBar {
   }
 
   async searchByGroupName(keyword) {
-    await this.searchInput.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await this.searchInput.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
     await this.searchInput.fill(keyword);
-    await this.loadingIndicator.waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
+    await this.loadingIndicator.waitFor({
+      state: "hidden",
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectResultCount(expectedCount) {
-    await expect(this.recordCount).toContainText(expectedCount, { timeout: TIMEOUTS.default });
+    await expect(this.recordCount).toContainText(expectedCount, {
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectGroupVisible(groupName) {
-    const groupLink = this.page.locator(SELECTORS.groupNameLink, { hasText: groupName });
+    const groupLink = this.page.locator(SELECTORS.groupNameLink, {
+      hasText: groupName,
+    });
     await expect(groupLink).toBeVisible({ timeout: TIMEOUTS.default });
   }
 
@@ -33,7 +43,9 @@ class GroupsSearchBar {
   }
 
   async expectNoResults() {
-    await expect(this.noResultsMessage).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.noResultsMessage).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     await expect(this.noResultsMessage).toHaveText(groupsData.noResultsMessage);
   }
 }

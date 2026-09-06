@@ -49,76 +49,75 @@ crm/
 │ └── loggers.js
 └── playwright.config.js
 
-
 ## Test Cases (26 total)
 
 ### Login (`login.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
-| TC-DL-01 | Landing page loads and shows Proceed to Login button |
-| TC-DL-02 | Clicking Proceed to Login redirects to Keycloak |
+| ID       | Test Case                                                  |
+| -------- | ---------------------------------------------------------- |
+| TC-DL-01 | Landing page loads and shows Proceed to Login button       |
+| TC-DL-02 | Clicking Proceed to Login redirects to Keycloak            |
 | TC-DL-03 | Valid credentials log user in and DreamLink app is visible |
-| TC-DL-04 | Invalid credentials show error on Keycloak page |
-| TC-DL-05 | DreamSave Groups page loads and shows logged in user |
-| TC-DL-06 | Logged in user can successfully log out |
+| TC-DL-04 | Invalid credentials show error on Keycloak page            |
+| TC-DL-05 | DreamSave Groups page loads and shows logged in user       |
+| TC-DL-06 | Logged in user can successfully log out                    |
 
 ### DreamSave Groups (`groups.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
-| TC-DS-01 | Groups list displays 20 records by default |
+| ID       | Test Case                                             |
+| -------- | ----------------------------------------------------- |
+| TC-DS-01 | Groups list displays 20 records by default            |
 | TC-DS-02 | Clicking the first group navigates to its detail page |
-| TC-DS-03 | Valid search returns exact matching group |
-| TC-DS-04 | Search with broad keyword returns multiple results |
-| TC-DS-05 | Invalid search displays no results message |
+| TC-DS-03 | Valid search returns exact matching group             |
+| TC-DS-04 | Search with broad keyword returns multiple results    |
+| TC-DS-05 | Invalid search displays no results message            |
 
 ### Users (`users.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
+| ID       | Test Case                                                     |
+| -------- | ------------------------------------------------------------- |
 | TC-US-01 | Users page loads via sidebar navigation and list is populated |
-| TC-US-02 | Clicking the first user navigates to their detail page |
-| TC-US-03 | Valid email search returns exactly one matching user |
-| TC-US-04 | Invalid search keyword displays no results message |
+| TC-US-02 | Clicking the first user navigates to their detail page        |
+| TC-US-03 | Valid email search returns exactly one matching user          |
+| TC-US-04 | Invalid search keyword displays no results message            |
 
 ### User Profile (`userProfile.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
+| ID       | Test Case                                                         |
+| -------- | ----------------------------------------------------------------- |
 | TC-UP-01 | Logged in user can navigate to their profile and verify Full Name |
 
 ### Eligibility Criteria (`eligibilityCriteria.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
-| TC-EC-01 | Eligibility Criteria page loads and list is populated |
-| TC-EC-02 | Clicking the first criterion navigates to its detail page |
-| TC-EC-03 | Valid search returns exactly one matching criterion |
-| TC-EC-04 | Invalid search displays no matching criteria message |
+| ID       | Test Case                                                  |
+| -------- | ---------------------------------------------------------- |
+| TC-EC-01 | Eligibility Criteria page loads and list is populated      |
+| TC-EC-02 | Clicking the first criterion navigates to its detail page  |
+| TC-EC-03 | Valid search returns exactly one matching criterion        |
+| TC-EC-04 | Invalid search displays no matching criteria message       |
 | TC-EC-05 | New criterion can be created and appears in search results |
 
 ### Eligibility Criteria Sets (`criteriaSets.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
+| ID        | Test Case                                                               |
+| --------- | ----------------------------------------------------------------------- |
 | TC-ECS-01 | New criteria set can be created with 7 criteria and shows success toast |
-| TC-ECS-02 | Criteria Sets list is populated after navigating via tab |
-| TC-ECS-03 | Valid search returns exactly one matching criteria set |
-| TC-ECS-04 | Invalid search displays no matching criteria sets message |
+| TC-ECS-02 | Criteria Sets list is populated after navigating via tab                |
+| TC-ECS-03 | Valid search returns exactly one matching criteria set                  |
+| TC-ECS-04 | Invalid search displays no matching criteria sets message               |
 
 ### Products (`products.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
+| ID       | Test Case                                        |
+| -------- | ------------------------------------------------ |
 | TC-PR-01 | Manage Products page loads and list is populated |
 
 ### Add Products (`addProducts.spec.js`)
 
-| ID | Test Case |
-|----|-----------|
-| TC-PR-02 | Open the Add Product page and verify the page title |
-| TC-PR-03 | Create a new Product and verify its creation |
+| ID       | Test Case                                                                    |
+| -------- | ---------------------------------------------------------------------------- |
+| TC-PR-02 | Open the Add Product page and verify the page title                          |
+| TC-PR-03 | Create a new Product and verify its creation                                 |
 | TC-PR-04 | View the details of an existing Product and verify the displayed information |
 
 ## Configuration
@@ -132,7 +131,6 @@ BASE_URL=https://lk-qa.dreamstartlabs.com
 TEST_USERNAME=your_username
 TEST_PASSWORD=your_password
 TEST_DISPLAY_NAME=Your Name
-
 
 ## Running Tests
 

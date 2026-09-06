@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class LeadDetailPage {
   constructor(page) {
@@ -7,7 +7,9 @@ class LeadDetailPage {
     this.leadNumber = page.locator(SELECTORS.leadNumber);
     this.leadGeneratedDate = page.locator(SELECTORS.leadGeneratedDate);
     this.leadSavingGroupValue = page.locator(SELECTORS.leadSavingGroupValue);
-    this.leadCurrentWorkflowStage = page.locator(SELECTORS.leadCurrentWorkflowStage);
+    this.leadCurrentWorkflowStage = page.locator(
+      SELECTORS.leadCurrentWorkflowStage,
+    );
     this.tasksGroupHead = page.locator(SELECTORS.leadTasksGroupHead);
     this.tasksStagePill = page.locator(SELECTORS.leadTasksStagePill);
     this.tasksCountLabel = page.locator(SELECTORS.leadTasksCountLabel);
@@ -15,57 +17,73 @@ class LeadDetailPage {
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/dl-lead\//, { timeout: TIMEOUTS.navigation });
+    await expect(this.page).toHaveURL(/dl-lead\//, {
+      timeout: TIMEOUTS.navigation,
+    });
   }
 
   async expectLeadNumberNotEmpty() {
     await expect(this.leadNumber).toBeVisible({ timeout: TIMEOUTS.default });
     const value = await this.leadNumber.innerText();
-    expect(value.trim()).not.toBe('');
+    expect(value.trim()).not.toBe("");
   }
 
   async expectLeadSavingGroupNotEmpty() {
-    await expect(this.leadSavingGroupValue).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.leadSavingGroupValue).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     const value = await this.leadSavingGroupValue.innerText();
-    expect(value.trim()).not.toBe('');
+    expect(value.trim()).not.toBe("");
   }
 
   async expectLeadSavingGroup(groupName) {
-    await expect(this.leadSavingGroupValue).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.leadSavingGroupValue).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     await expect(this.leadSavingGroupValue).toContainText(groupName);
   }
 
   async expectCurrentWorkflowStageNotEmpty() {
-    await expect(this.leadCurrentWorkflowStage).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.leadCurrentWorkflowStage).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     const value = await this.leadCurrentWorkflowStage.innerText();
-    expect(value.trim()).not.toBe('');
+    expect(value.trim()).not.toBe("");
   }
 
   async expectTasksListNotEmpty() {
-    await expect(this.tasksStagePill).toBeVisible({ timeout: TIMEOUTS.default });
-    await expect(this.tasksCountLabel).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.tasksStagePill).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
+    await expect(this.tasksCountLabel).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     const countText = await this.tasksCountLabel.innerText();
-    expect(countText.trim()).not.toBe('');
+    expect(countText.trim()).not.toBe("");
   }
 
   async expectGeneratedDateIsToday() {
-    await expect(this.leadGeneratedDate).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.leadGeneratedDate).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
     const dateText = await this.leadGeneratedDate.innerText();
     const today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, "0");
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
     const yyyy = today.getFullYear();
     expect(dateText.trim()).toContain(`${dd}-${mm}-${yyyy}`);
   }
 
   async expectSixTasksAllAssigned() {
-    await expect(this.tasksStagePill).toBeVisible({ timeout: TIMEOUTS.default });
-    await expect(this.tasksStagePill).toContainText('Client Assessment');
-    await expect(this.tasksCountLabel).toContainText('6 tasks');
+    await expect(this.tasksStagePill).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
+    await expect(this.tasksStagePill).toContainText("Client Assessment");
+    await expect(this.tasksCountLabel).toContainText("6 tasks");
     const pills = this.leadTaskStatusPills;
     await expect(pills).toHaveCount(6, { timeout: TIMEOUTS.default });
     for (let i = 0; i < 6; i++) {
-      await expect(pills.nth(i)).toContainText('Assigned');
+      await expect(pills.nth(i)).toContainText("Assigned");
     }
   }
 }

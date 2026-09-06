@@ -1,6 +1,6 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
-const { BasePage } = require('../BasePage');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
+const { BasePage } = require("../BasePage");
 
 class GroupsPage extends BasePage {
   constructor(page) {
@@ -12,44 +12,55 @@ class GroupsPage extends BasePage {
   }
 
   async open() {
-    await this.goto('/desk/dl-dreamsave-group');
+    await this.goto("/desk/dl-dreamsave-group");
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/dl-dreamsave-group/, { timeout: TIMEOUTS.navigation });
+    await expect(this.page).toHaveURL(/dl-dreamsave-group/, {
+      timeout: TIMEOUTS.navigation,
+    });
     await this.expectVisible(this.pageTitle);
   }
 
   async expectLoggedInUser(displayName) {
-    await expect(this.loggedInUser).toContainText(displayName, { ignoreCase: true });
+    await expect(this.loggedInUser).toContainText(displayName, {
+      ignoreCase: true,
+    });
   }
 
   async expectGroupListVisible() {
-    await expect(this.groupListRow.first()).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.groupListRow.first()).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
   }
 
-    async expectDefaultPageSize(expectedCount) {
-  // Wait for loading indicator to be hidden
-  await this.page
-    .locator(SELECTORS.deskLoadingIndicator)
-    .waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
+  async expectDefaultPageSize(expectedCount) {
+    // Wait for loading indicator to be hidden
+    await this.page
+      .locator(SELECTORS.deskLoadingIndicator)
+      .waitFor({ state: "hidden", timeout: TIMEOUTS.default });
 
-  // Assert count text
-  await expect(this.recordCount).toContainText('20 of', { timeout: TIMEOUTS.default });
+    // Assert count text
+    await expect(this.recordCount).toContainText("20 of", {
+      timeout: TIMEOUTS.default,
+    });
 
-  // Assert rendered row count
-  const rows = await this.groupListRow.count();
-  expect(rows).toBe(expectedCount);
-}
+    // Assert rendered row count
+    const rows = await this.groupListRow.count();
+    expect(rows).toBe(expectedCount);
+  }
 
-async clickFirstGroup() {
+  async clickFirstGroup() {
     const firstGroupLink = this.groupListRow
       .first()
       .locator(SELECTORS.groupNameLink);
-    await firstGroupLink.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await firstGroupLink.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
     const groupName = await firstGroupLink.innerText();
     await firstGroupLink.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
     return groupName.trim();
   }
 }

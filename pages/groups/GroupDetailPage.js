@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class GroupDetailPage {
   constructor(page) {
@@ -8,12 +8,19 @@ class GroupDetailPage {
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/dl-dreamsave-group\//, { timeout: TIMEOUTS.navigation });
-    await this.groupNameField.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await expect(this.page).toHaveURL(/dl-dreamsave-group\//, {
+      timeout: TIMEOUTS.navigation,
+    });
+    await this.groupNameField.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectGroupDetailName(expectedName) {
-    await expect(this.groupNameField).toHaveText(expectedName, { timeout: TIMEOUTS.default });
+    await expect(this.groupNameField).toHaveText(expectedName, {
+      timeout: TIMEOUTS.default,
+    });
   }
 }
 

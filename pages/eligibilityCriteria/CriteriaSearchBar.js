@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS, DEFAULTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS, DEFAULTS } = require("../../common/constants");
 
 class CriteriaSearchBar {
   constructor(page) {
@@ -9,11 +9,16 @@ class CriteriaSearchBar {
     this.noResultsMessage = page.locator(SELECTORS.criteriaNoResultsMessage);
   }
 
-async searchByCriterionName(keyword) {
-  await this.searchInput.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
-  await this.searchInput.fill(keyword);
-  await expect(this.criteriaRow).not.toHaveCount(DEFAULTS.pageSize, { timeout: TIMEOUTS.default });
-}
+  async searchByCriterionName(keyword) {
+    await this.searchInput.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
+    await this.searchInput.fill(keyword);
+    await expect(this.criteriaRow).not.toHaveCount(DEFAULTS.pageSize, {
+      timeout: TIMEOUTS.default,
+    });
+  }
 
   async expectExactRowCount(expectedCount) {
     const count = await this.criteriaRow.count();
@@ -21,8 +26,12 @@ async searchByCriterionName(keyword) {
   }
 
   async expectNoResults() {
-    await expect(this.noResultsMessage).toBeVisible({ timeout: TIMEOUTS.default });
-    await expect(this.noResultsMessage).toHaveText('No matching eligibility criteria.');
+    await expect(this.noResultsMessage).toBeVisible({
+      timeout: TIMEOUTS.default,
+    });
+    await expect(this.noResultsMessage).toHaveText(
+      "No matching eligibility criteria.",
+    );
   }
 }
 

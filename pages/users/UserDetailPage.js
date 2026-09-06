@@ -1,5 +1,5 @@
-const { expect } = require('@playwright/test');
-const { SELECTORS, TIMEOUTS } = require('../../common/constants');
+const { expect } = require("@playwright/test");
+const { SELECTORS, TIMEOUTS } = require("../../common/constants");
 
 class UserDetailPage {
   constructor(page) {
@@ -8,13 +8,18 @@ class UserDetailPage {
   }
 
   async expectLoaded() {
-    await expect(this.page).toHaveURL(/dl-user\//, { timeout: TIMEOUTS.navigation });
-    await this.fullNameField.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await expect(this.page).toHaveURL(/dl-user\//, {
+      timeout: TIMEOUTS.navigation,
+    });
+    await this.fullNameField.waitFor({
+      state: "visible",
+      timeout: TIMEOUTS.default,
+    });
   }
 
   async expectFullNameNotEmpty() {
     const fullName = await this.fullNameField.innerText();
-    expect(fullName.trim()).not.toBe('');
+    expect(fullName.trim()).not.toBe("");
   }
 }
 

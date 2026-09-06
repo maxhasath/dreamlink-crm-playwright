@@ -1,10 +1,10 @@
-const { test, expect } = require('@playwright/test');
-const { LoginPage } = require('../../pages/user/LoginPage');
-const { GroupsPage } = require('../../pages/groups/GroupsPage');
-const { UserProfilePage } = require('../../pages/users/UserProfilePage');
-const { getCredentials } = require('../../util/helpers');
+const { test, expect } = require("@playwright/test");
+const { LoginPage } = require("../../pages/user/LoginPage");
+const { GroupsPage } = require("../../pages/groups/GroupsPage");
+const { UserProfilePage } = require("../../pages/users/UserProfilePage");
+const { getCredentials } = require("../../util/helpers");
 
-test.describe('DreamLink CRM - User Profile', () => {
+test.describe("DreamLink CRM - User Profile", () => {
   let loginPage;
   let groupsPage;
   let userProfilePage;
@@ -20,11 +20,12 @@ test.describe('DreamLink CRM - User Profile', () => {
     await groupsPage.expectLoaded();
   });
 
-  test('TC-UP-01 | Logged in user can navigate to their profile and verify Full Name and page title', async ({ page }) => {
+  test("TC-UP-01 | Logged in user can navigate to their profile and verify Full Name and page title", async ({
+    page,
+  }) => {
     await userProfilePage.navigateViaUserMenu();
     await userProfilePage.expectLoaded();
     await userProfilePage.expectPageTitleVisible();
     await userProfilePage.expectFullNameVisible();
   });
-
 });
