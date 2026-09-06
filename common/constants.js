@@ -223,6 +223,20 @@ formsSuccessToastTitle: 'li[data-sonner-toast][data-type="success"] div[data-tit
 formPreviewTitle: 'h1.form-preview-page__title',
 formPreviewStatusBadge: 'div.form-preview-page__summary-item span[data-slot="badge"]',
 formPreviewSummaryValue: 'span.form-preview-page__summary-value',
+
+  // Tasks list page
+  tasksPageTitle: 'a.title-text[title="Task"]',
+  tasksNavLink: 'a.item-anchor[href="/desk/dl-task"]',
+  taskNameLink: 'a.ellipsis[data-doctype="DL Task"]',
+  taskNumberCell: 'div.list-row-col .level-item a',
+
+    // Task detail page
+  taskDetailNumber: '[data-fieldname="task_number"] .control-value.like-disabled-input',
+  taskDetailTitle: '[data-fieldname="title"] .control-value.like-disabled-input.bold',
+  taskDetailStatus: '[data-fieldname="status"] .control-value.like-disabled-input',
+  taskDetailStage: '[data-fieldname="stage"] .control-value.like-disabled-input',
+  taskDetailReference: '[data-fieldname="reference_doc"] .control-value.like-disabled-input',
+  taskNumberSearchInput: 'input[data-fieldname="task_number"]',
 };
 
 const TIMEOUTS = {
