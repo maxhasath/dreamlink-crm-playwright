@@ -201,6 +201,28 @@ const SELECTORS = {
   preLeadTasksCountLabel: 'div.dl-tasks-group-head span.text-muted.small',
   preLeadTaskStatusPill: 'span.indicator-pill.purple',
   preLeadTasksGrid: 'div.dl-tasks-group div.grid-row',
+
+/// Forms list page
+formsPageTitle: 'span.app-shell__breadcrumb-label--current',
+formsListRow: 'tr.forms-list-item[tabindex="0"]',
+formsResultCount: 'div.forms-list-page__results-count',
+formsSearchInput: 'input#search',
+formsNoResultsMessage: 'p.forms-list-page__empty-text',
+formsItemName: 'span.forms-list-item__name',
+formsCreateBtn: 'a[href="/forms/new"]',
+
+// Create Form page
+formsSurveyTitleInput: 'span[role="textbox"][aria-label="Survey Title"]',
+formsAddQuestionText: 'Add Question',
+formsQuestionNameInput: 'span[role="textbox"][aria-label="content editable"]',
+formsSaveAndPublishBtn: 'button.form-create-page__primary-action',
+formsSuccessToast: 'li[data-sonner-toast][data-type="success"]',
+formsSuccessToastTitle: 'li[data-sonner-toast][data-type="success"] div[data-title]',
+
+// Form detail/preview page
+formPreviewTitle: 'h1.form-preview-page__title',
+formPreviewStatusBadge: 'div.form-preview-page__summary-item span[data-slot="badge"]',
+formPreviewSummaryValue: 'span.form-preview-page__summary-value',
 };
 
 const TIMEOUTS = {

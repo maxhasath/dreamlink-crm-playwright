@@ -1,0 +1,13 @@
+{
+  "validSearch": {
+    "keyword": "R2 Dim Form"
+  },
+  "invalidSearch": {
+    "keyword": "invalid"
+  },
+  "noResultsMessage": "No forms match your search.",
+  "createForm": {
+    "baseName": "QAForm",
+    "questionName": "QA Test Question"
+  }
+}
