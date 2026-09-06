@@ -113,6 +113,14 @@ crm/
 |----|-----------|
 | TC-PR-01 | Manage Products page loads and list is populated |
 
+### Add Products (`addProducts.spec.js`)
+
+| ID | Test Case |
+|----|-----------|
+| TC-PR-02 | Open the Add Product page and verify the page title |
+| TC-PR-03 | Create a new Product and verify its creation |
+| TC-PR-04 | View the details of an existing Product and verify the displayed information |
+
 ## Configuration
 
 **Target Environment:** `https://lk-qa.dreamstartlabs.com`

@@ -1,0 +1,15 @@
+{
+    "searchInput": {
+        "search": "region"
+    },
+    "searchInvalidInput": {
+        "search": "invalid"
+    },
+    "addGeofence": {
+        "geofenceName": "Test Geofence",
+        "overlapPriority": "1"
+    },
+    "exportGeofence": {
+        "filename": "geofence_export.csv"
+    }
+}
