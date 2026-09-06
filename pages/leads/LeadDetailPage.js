@@ -7,6 +7,7 @@ class LeadDetailPage {
     this.leadNumber = page.locator(SELECTORS.leadNumber);
     this.leadGeneratedDate = page.locator(SELECTORS.leadGeneratedDate);
     this.leadSavingGroupValue = page.locator(SELECTORS.leadSavingGroupValue);
+    this.leadCurrentWorkflowStage = page.locator(SELECTORS.leadCurrentWorkflowStage);
     this.tasksGroupHead = page.locator(SELECTORS.leadTasksGroupHead);
     this.tasksStagePill = page.locator(SELECTORS.leadTasksStagePill);
     this.tasksCountLabel = page.locator(SELECTORS.leadTasksCountLabel);
@@ -23,9 +24,28 @@ class LeadDetailPage {
     expect(value.trim()).not.toBe('');
   }
 
+  async expectLeadSavingGroupNotEmpty() {
+    await expect(this.leadSavingGroupValue).toBeVisible({ timeout: TIMEOUTS.default });
+    const value = await this.leadSavingGroupValue.innerText();
+    expect(value.trim()).not.toBe('');
+  }
+
   async expectLeadSavingGroup(groupName) {
     await expect(this.leadSavingGroupValue).toBeVisible({ timeout: TIMEOUTS.default });
     await expect(this.leadSavingGroupValue).toContainText(groupName);
+  }
+
+  async expectCurrentWorkflowStageNotEmpty() {
+    await expect(this.leadCurrentWorkflowStage).toBeVisible({ timeout: TIMEOUTS.default });
+    const value = await this.leadCurrentWorkflowStage.innerText();
+    expect(value.trim()).not.toBe('');
+  }
+
+  async expectTasksListNotEmpty() {
+    await expect(this.tasksStagePill).toBeVisible({ timeout: TIMEOUTS.default });
+    await expect(this.tasksCountLabel).toBeVisible({ timeout: TIMEOUTS.default });
+    const countText = await this.tasksCountLabel.innerText();
+    expect(countText.trim()).not.toBe('');
   }
 
   async expectGeneratedDateIsToday() {
@@ -39,12 +59,9 @@ class LeadDetailPage {
   }
 
   async expectSixTasksAllAssigned() {
-    // Assert tasks header shows correct stage and count
     await expect(this.tasksStagePill).toBeVisible({ timeout: TIMEOUTS.default });
     await expect(this.tasksStagePill).toContainText('Client Assessment');
     await expect(this.tasksCountLabel).toContainText('6 tasks');
-
-    // Assert all 6 task rows have Assigned status
     const pills = this.leadTaskStatusPills;
     await expect(pills).toHaveCount(6, { timeout: TIMEOUTS.default });
     for (let i = 0; i < 6; i++) {

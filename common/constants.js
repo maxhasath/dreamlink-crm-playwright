@@ -172,6 +172,7 @@ const SELECTORS = {
   leadTasksGroupHead: 'div.dl-tasks-group-head',
   leadTasksStagePill: 'div.dl-tasks-group-head span.indicator-pill.cyan',
   leadTasksCountLabel: 'div.dl-tasks-group-head span.text-muted.small',
+  leadCurrentWorkflowStage: '[data-fieldname="current_workflow_stage"] .control-value.like-disabled-input',
 
   // Leads list — active status pill
   leadActiveStatusPill: 'span.filterable.indicator-pill.green.ellipsis',

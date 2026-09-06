@@ -1,77 +1,46 @@
 const { test } = require('@playwright/test');
 const { LoginPage } = require('../../pages/user/LoginPage');
-const { GeofencePage } = require('../../pages/geofences/GeofencePage');
-const { AddGeofencePage } = require('../../pages/geofences/AddGeofencePage');
-const { GeofenceDetailPage } = require('../../pages/geofences/GeofenceDetailPage');
+const { LeadsPage } = require('../../pages/leads/LeadsPage');
+const { LeadDetailPage } = require('../../pages/leads/LeadDetailPage');
+const { LeadsSearchBar } = require('../../pages/leads/LeadsSearchBar');
 const { getCredentials } = require('../../util/helpers');
-const geofenceData = require('../../data/geofenceData.json');
+const leadsData = require('../../data/leads.json');
 
-test.describe('DreamLink CRM - Geofence', () => {
+test.describe('DreamLink CRM - Leads', () => {
   let loginPage;
-  let geofencePage;
-  let addGeofencePage;
-  let geofenceDetailPage;
+  let leadsPage;
+  let leadDetailPage;
+  let leadsSearchBar;
   const userData = getCredentials();
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
-    geofencePage = new GeofencePage(page);
+    leadsPage = new LeadsPage(page);
+    leadDetailPage = new LeadDetailPage(page);
+    leadsSearchBar = new LeadsSearchBar(page);
     await loginPage.open();
     await loginPage.login(userData.username, userData.password);
-    await geofencePage.open();
-    await geofencePage.expectLoaded();
+    await leadsPage.open();
+    await leadsPage.expectLoaded();
   });
 
-  test('TC-GF-01 | Geofence List page loads via sidebar navigation and country data exists', async ({ page }) => {
-    await geofencePage.expectCountryDataExists();
+  test('TC-LD-01 | Leads list page loads and displays at least one lead record', async ({ page }) => {
+    await leadsPage.expectLeadListNotEmpty();
   });
 
-  test('TC-GF-02 | The Organizational hierarchy list is populated', async ({ page }) => {
-    await geofencePage.clickOrgHierarchy();
+  test('TC-LD-02 | Clicking the first lead navigates to detail page with Number, Saving Group, Current Workflow Stage and Tasks list all populated', async ({ page }) => {
+    await leadsPage.clickFirstLead();
+    await leadDetailPage.expectLoaded();
+    await leadDetailPage.expectLeadNumberNotEmpty();
+    await leadDetailPage.expectLeadSavingGroupNotEmpty();
+    await leadDetailPage.expectCurrentWorkflowStageNotEmpty();
+    await leadDetailPage.expectTasksListNotEmpty();
   });
 
-  test('TC-GF-03 | The FO Area list is populated', async ({ page }) => {
-    await geofencePage.expectFoDataExists();
-  });
-
-  test('TC-GF-04 | Search for a Geofence by a single keyword and verify the search results', async ({ page }) => {
-    await geofencePage.searchGeofenceByName(geofenceData.searchInput.search);
-    await geofencePage.expectListPopulated();
-  });
-
-  test('TC-GF-05 | Search for a Geofence by an invalid keyword and verify the No Geofence Message is displayed', async ({ page }) => {
-    await geofencePage.searchGeofenceByName(geofenceData.searchInvalidInput.search);
-    await geofencePage.expectInvalidSearchMessage();
-  });
-
-  test('TC-GF-06 | Download Geofence CSV', async ({ page }) => {
-    const download = await geofencePage.downloadGeofenceCsv();
-    await geofencePage.expectCsvDownloaded(download);
-  });
-
-  test('TC-GF-07 | Navigate to the Add Geofence page and view all the required fields', async ({ page }) => {
-    addGeofencePage = new AddGeofencePage(page);
-    await addGeofencePage.clickNewGeofence(
-      geofenceData.addGeofence.geofenceName,
-      geofenceData.addGeofence.overlapPriority
-    );
-  });
-
-  test('TC-GF-08 | Navigate to the Geofence Detail page and view the User Assign Modal', async ({ page }) => {
-    geofenceDetailPage = new GeofenceDetailPage(page);
-    await geofenceDetailPage.expectGeofenceDetailPage();
-  });
-
-  test('TC-GF-09 | Navigate to the Geofence Detail page and view the Product Assign Modal', async ({ page }) => {
-    geofenceDetailPage = new GeofenceDetailPage(page);
-    await geofenceDetailPage.expectGeofenceProductModal();
-  });
-
-  test('TC-GF-10 | Selecting a geofence from search results renders the map correctly', async ({ page }) => {
-    await geofencePage.searchGeofenceByName(geofenceData.mapSearch.keyword);
-    await geofencePage.expectResultCount(geofenceData.mapSearch.expectedCount);
-    await geofencePage.clickFirstGeofenceResult();
-    await geofencePage.expectGeofenceSelected();
-    await geofencePage.expectMapVisible();
+  test('TC-LD-03 | Search by lead number returns exactly 1 result containing the searched keyword', async ({ page }) => {
+    const { keyword, expectedCount } = leadsData.validSearch;
+    await leadsSearchBar.searchByLeadNumber(keyword);
+    await leadsSearchBar.expectResultCount(expectedCount);
+    await leadsSearchBar.expectLeadVisible(keyword);
   });
 });

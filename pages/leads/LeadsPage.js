@@ -7,6 +7,7 @@ class LeadsPage {
     this.pageTitle = page.locator(SELECTORS.leadsPageTitle);
     this.leadListRow = page.locator(SELECTORS.deskListRow);
     this.leadNameLink = page.locator(SELECTORS.leadNameLink);
+    this.loadingIndicator = page.locator(SELECTORS.deskLoadingIndicator);
   }
 
   async open() {
@@ -17,6 +18,14 @@ class LeadsPage {
   async expectLoaded() {
     await expect(this.page).toHaveURL(/dl-lead/, { timeout: TIMEOUTS.navigation });
     await expect(this.pageTitle).toBeVisible({ timeout: TIMEOUTS.default });
+  }
+
+  async clickFirstLead() {
+    await this.loadingIndicator.waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
+    const firstLeadLink = this.leadListRow.first().locator(SELECTORS.leadNameLink);
+    await firstLeadLink.waitFor({ state: 'visible', timeout: TIMEOUTS.default });
+    await firstLeadLink.click();
+    await this.page.waitForLoadState('domcontentloaded');
   }
 
   async clickActiveLead() {
@@ -31,8 +40,7 @@ class LeadsPage {
   }
 
   async expectLeadListNotEmpty() {
-    await this.page.locator(SELECTORS.deskLoadingIndicator)
-      .waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
+    await this.loadingIndicator.waitFor({ state: 'hidden', timeout: TIMEOUTS.default });
     await expect(this.leadNameLink.first()).toBeVisible({ timeout: TIMEOUTS.default });
   }
 
