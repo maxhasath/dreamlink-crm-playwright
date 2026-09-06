@@ -21,6 +21,7 @@ class GeofencePage extends BasePage {
     this.focusOnMapBtn = page.locator(SELECTORS.geofenceFocusOnMapBtn);
     this.configureUsersBtn = page.locator(SELECTORS.geofenceConfigureUsersBtn);
     this.configureProductsBtn = page.locator(SELECTORS.geofenceConfigureProductsBtn);
+    this.geofenceItemName = page.locator(SELECTORS.geofenceItemName);
    
   }
 
@@ -115,6 +116,14 @@ async expectAssignedProductsNotEmpty() {
     .locator('xpath=ancestor::section');
   await expect(productsSection.locator(SELECTORS.geofenceAssignedItemName))
     .not.toHaveCount(0, { timeout: TIMEOUTS.default });
+}
+async expectAllResultsContainKeyword(keyword) {
+  const matchingRows = this.geofenceListRow
+    .filter({ hasText: new RegExp(keyword, 'i') });
+  await expect(matchingRows.first()).toBeVisible({ timeout: TIMEOUTS.default });
+  await expect(matchingRows).not.toHaveCount(0, { timeout: TIMEOUTS.default });
+  const count = await matchingRows.count();
+  expect(count).toBeGreaterThan(1);
 }
 }
 

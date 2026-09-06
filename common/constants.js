@@ -120,6 +120,7 @@ const SELECTORS = {
   geofenceParentDropdown: '[type="button"][role="combobox"]',
   overlapPriorityInput: '[data-slot="input"][name="priority"]',
   geofenceDrawBtn: '[data-slot="button"][type="button"]',
+  geofenceItemName: 'span.text-foreground.flex.items-center.gap-2.text-sm.font-semibold',
 
   // Geofence Detail Page
   geofenceCountryCard: '[data-state="closed"][data-slot="collapsible"]',

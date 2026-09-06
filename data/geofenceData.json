@@ -19,5 +19,8 @@
   "detailSearch": {
     "keyword": "branch central",
     "expectedCount": 1
-  }
+  },
+"multipleKeywordSearch": {
+  "keyword": "ZM Lusaka"
+}
 }

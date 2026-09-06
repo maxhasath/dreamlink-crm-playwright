@@ -81,4 +81,8 @@ test.describe('DreamLink CRM - Geofence', () => {
     await geofencePage.expectAssignedUsersNotEmpty();
     await geofencePage.expectAssignedProductsNotEmpty();
   });
+  test('TC-GF-12 | Search with a broad keyword returns multiple results all containing the keyword', async ({ page }) => {
+  await geofencePage.searchGeofenceByName(geofenceData.multipleKeywordSearch.keyword);
+  await geofencePage.expectAllResultsContainKeyword(geofenceData.multipleKeywordSearch.keyword);
+});
 });
